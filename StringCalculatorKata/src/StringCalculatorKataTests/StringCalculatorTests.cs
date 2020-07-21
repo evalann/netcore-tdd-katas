@@ -65,7 +65,7 @@ namespace StringCalculatorKataTests
         }
 
         [TestCase("//;\n1;2", 3)]
-        [TestCase("//bar\n11bar32", 43)]
+        [TestCase("//b\n11b32", 43)]
         [TestCase("//^\n1^2^3", 6)]
         public void Add_GivenDelimiterSpecified_ShouldReturnSum(string input, int expected)
         {
