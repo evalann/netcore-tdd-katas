@@ -108,6 +108,18 @@ namespace StringCalculatorKataTests
             Assert.That(act, Is.EqualTo(expected));
         }
 
+        [TestCase("//[***]\n1***2", 3)]
+        [TestCase("//[boo]\n5boo5", 10)]
+        [TestCase("//[^_^]\n4^_^8", 12)]
+        public void Add_GivenDelimiterWithSquareBrackets_ShouldExtractMultiCharacterDelimiter(string input, int expected)
+        {
+            var sut = CreateSut();
+
+            var act = sut.Add(input);
+
+            Assert.That(act, Is.EqualTo(expected));
+        }
+
         private static StringCalculator CreateSut()
         {
             return new StringCalculator();
