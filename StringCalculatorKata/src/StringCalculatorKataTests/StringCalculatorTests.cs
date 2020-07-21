@@ -7,7 +7,7 @@ namespace StringCalculatorKataTests
         [Test]
         public void Add_GivenBlankString_ShouldReturn0()
         {
-            var sut = new StringCalculator();
+            var sut = CreateSut();
 
             int act = sut.Add("");
 
@@ -20,7 +20,7 @@ namespace StringCalculatorKataTests
         [TestCase("2147483647", int.MaxValue)]
         public void Add_GivenSingleNumberShouldReturnThatNumber(string input, int expected)
         {
-            var sut = new StringCalculator();
+            var sut = CreateSut();
 
             int act = sut.Add(input);
 
@@ -32,11 +32,53 @@ namespace StringCalculatorKataTests
         [TestCase("42,27", 69)]
         public void Add_GivenNumberCommaNumber_ShouldReturnSumOfBoth(string input, int expected)
         {
-            var sut = new StringCalculator();
+            var sut = CreateSut();
 
             int act = sut.Add(input);
 
             Assert.That(act, Is.EqualTo(expected));
+        }
+
+        [TestCase("1,2,3,4", 10)]
+        [TestCase("100,302,693", 1095)]
+        [TestCase("40,25,1,2,1", 69)]
+        public void Add_GivenManyNumbers_ShouldReturnSum(string input, int expected)
+        {
+            var sut = CreateSut();
+
+            int act = sut.Add(input);
+
+            Assert.That(act, Is.EqualTo(expected));
+        }
+
+        [TestCase("1,2\n3,4", 10)]
+        [TestCase("1\n2", 3)]
+        [TestCase("100\n302\n693", 1095)]
+        [TestCase("40\n25,1,2\n1", 69)]
+        public void Add_GivenNewLineDelimiterAsWell_ShouldReturnSum(string input, int expected)
+        {
+            var sut = CreateSut();
+
+            int act = sut.Add(input);
+
+            Assert.That(act, Is.EqualTo(expected));
+        }
+
+        [TestCase("//;\n1;2", 3)]
+        [TestCase("//bar\n11bar32", 43)]
+        [TestCase("//^\n1^2^3", 6)]
+        public void Add_GivenDelimiterSpecified_ShouldReturnSum(string input, int expected)
+        {
+            var sut = CreateSut();
+
+            int act = sut.Add(input);
+
+            Assert.That(act, Is.EqualTo(expected));
+        }
+
+        private static StringCalculator CreateSut()
+        {
+            return new StringCalculator();
         }
     }
 }
