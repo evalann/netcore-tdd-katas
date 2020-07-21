@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace StringCalculatorKataTests
 {
@@ -30,11 +31,10 @@ namespace StringCalculatorKataTests
             List<string> delimiters = new List<string> { ",", "\n" };
             if (input.StartsWith("//"))
             {
-                var delimiterSection = input.Substring(2, input.IndexOf("\n")-2);
+                var delimiterSection = input.Substring(2, input.IndexOf("\n")-2);                
                 var delimiter = delimiterSection.Replace("[", "").Replace("]", "");
                 delimiters.Add(delimiter);
                 input = input.Remove(0, delimiterSection.Length + 3);
-                System.Console.WriteLine(input);
             }
 
             return delimiters.ToArray();
