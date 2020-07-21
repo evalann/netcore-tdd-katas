@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 
 namespace StringCalculatorKataTests
@@ -74,6 +75,26 @@ namespace StringCalculatorKataTests
             int act = sut.Add(input);
 
             Assert.That(act, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Add_GivenNegativeNumber_ShouldThrowIndexOutOfRangeExceptionWithNegativeInMessage()
+        {
+            var sut = CreateSut();
+
+            var ex = Assert.Throws<IndexOutOfRangeException>(() => sut.Add("-1,2"));
+
+            Assert.That(ex.Message, Is.EqualTo("negatives not allowed (-1)"));
+        }
+
+        [Test]
+        public void Add_GivenMultipleNegativeNumbers_ShouldThrowIndexOutOfRangeExceptionWithNegativesInMessage()
+        {
+            var sut = CreateSut();
+
+            var ex = Assert.Throws<IndexOutOfRangeException>(() => sut.Add("-1,-2"));
+
+            Assert.That(ex.Message, Is.EqualTo("negatives not allowed (-1,-2)"));
         }
 
         private static StringCalculator CreateSut()

@@ -10,14 +10,15 @@ namespace StringCalculatorKataTests
         {
             if (input == "") return 0;
             
-            var delimiters = GetDelimiters(ref input);
-            if (delimiters.Any(d => input.Contains(d)))
-            {
-                var split = input.Split(delimiters, StringSplitOptions.None).Select(int.Parse);
-                return split.Sum();
-            }
-
-            return int.Parse(input);
+            var delimiters = GetDelimiters(ref input);            
+            var split = input.Split(delimiters, StringSplitOptions.None).Select(int.Parse);
+            
+            var negativeValues = split.Where(i => i < 0).Select(i => i);
+            
+            if(!negativeValues.Any()) return split.Sum();
+            
+            var negativeMessage = string.Join(",", negativeValues);
+            throw new IndexOutOfRangeException($"negatives not allowed ({negativeMessage})");
         }
 
         private string[] GetDelimiters(ref string input)
