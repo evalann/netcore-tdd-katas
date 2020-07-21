@@ -18,7 +18,6 @@ namespace StringCalculatorKataTests
         [TestCase("69", 69)]
         [TestCase("1", 1)]
         [TestCase("2", 2)]
-        [TestCase("2147483647", int.MaxValue)]
         public void Add_GivenSingleNumberShouldReturnThatNumber(string input, int expected)
         {
             var sut = CreateSut();
@@ -95,6 +94,18 @@ namespace StringCalculatorKataTests
             var ex = Assert.Throws<IndexOutOfRangeException>(() => sut.Add("-1,-2"));
 
             Assert.That(ex.Message, Is.EqualTo("negatives not allowed (-1,-2)"));
+        }
+
+        [TestCase("1001,2", 2)]
+        [TestCase("1000,2,4000", 1002)]
+        [TestCase("10000,20000", 0)]
+        public void Add_GivenNumbersGreaterThan1000_ShouldIgnoreAndSumNumbersLessThan1000(string input, int expected)
+        {
+            var sut = CreateSut();
+
+            var act = sut.Add(input);
+
+            Assert.That(act, Is.EqualTo(expected));
         }
 
         private static StringCalculator CreateSut()
